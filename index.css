@@ -1,0 +1,56 @@
+body {
+  font-family: "EB Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 26.4px;
+}
+
+input {
+  font-family: "EB Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 26.4px;
+  border: 2px solid gray;
+  border-radius: 5px;
+}
+
+#container {
+  width: 800px;
+  margin: 0 auto;
+  border: 2px dashed green;
+}
+
+#mainTable {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+#mainTable td {
+  width: 100px;
+  text-align: center;
+}
+
+#bpm, #repAmount {
+  width: 60px;
+}
+
+#repAmount {
+  margin-top: 10px;
+}
+
+#mainTable, #mainTable td {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.centered {
+  text-align: center;
+}
+
+.new-line {
+  background-color: lightgrey;
+}
