@@ -2,6 +2,7 @@ let mainTable = document.getElementById("mainTable");
 let sounding = false;
 let timerID;
 let newLineRow;
+let currentRow;
 let repetitions; // initial
 let rhythmMS;
 let rhythmCurrent; // [inhale, hold, exhale]
@@ -48,6 +49,7 @@ function tick() {
 function whichPhase() {
 
   if ( !currentPhase ) { // very first ding
+    currentRow = newLineRow;
     currentPhase = 'inhale';
     initialAmountInCP = rhythmCurrent[0];
     playedInCP = 1;
@@ -72,7 +74,6 @@ function whichPhase() {
     }
   } else if ( currentPhase == 'exhale' ) { // exhale phase check
     let amountCPLeft = initialAmountInCP - playedInCP;
-    console.log('amountCPLeft = ' + amountCPLeft);
     if ( amountCPLeft < 1 ) {
       thisRowRepeated += 1;
 
@@ -81,28 +82,28 @@ function whichPhase() {
         getNextRow();
         currentPhase = 'inhale';
         initialAmountInCP = rhythmCurrent[0];
-        playedInCP = 0;
+        playedInCP = 1;
 
       } else { // starting this row ones again
         console.log('starting this row ones again');
         currentPhase = 'inhale';
-        playedInCP = 0;
+        playedInCP = 1;
         initialAmountInCP = rhythmCurrent[0];
       }
+    } else {
+      playedInCP += 1;
     }
-    playedInCP += 1;
   } 
 
 
-  console.log('currentPhase = ' + currentPhase);
   return currentPhase;
 }
 
 
 function getNextRow() {
 
-  let nextRow = newLineRow.nextElementSibling;
-  rhythmCurrent = getrhythmNumbers(nextRow);
+  currentRow = currentRow.nextElementSibling;
+  rhythmCurrent = getrhythmNumbers(currentRow);
   thisRowRepeated = 0;
 
 }
