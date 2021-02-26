@@ -54,3 +54,7 @@ input {
 .new-line {
   background-color: lightgrey;
 }
+
+.playing-row {
+  outline: 2px solid red;
+}

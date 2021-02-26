@@ -1,39 +1,52 @@
+// ----------------------- initial -----------------------
 let mainTable = document.getElementById("mainTable");
-let sounding = false;
-let timerID;
-let newLineRow;
-let currentRow;
-let repetitions; // initial
-let rhythmMS;
-let rhythmCurrent; // [inhale, hold, exhale]
-let currentPhase;
-let initialAmountInCP; // initialAmountInCurrentPhase
-let playedInCP; // playedInCurrentPhase
-let thisRowRepeated; // times
 
+let tickState = {};
+// tickState contains:
+// timerID
+// newLineRow
+// currentRow
+// repetitions - initial
+// rhythmMS
+// rhythmCurrent - [inhale, hold, exhale] (array with amount in each phase)
+// currentPhase - 0 == inhale / 1 == hold / 2 == exhale
+// initialAmountInCP - initialAmountInCurrentPhase
+// playedInCP - playedInCurrentPhase
+// thisRowRepeated -  times
+tickState.sounding = false;
+
+let ding1 = new Audio(src="./sounds/ding1.mp3");
+let ding2 = new Audio(src="./sounds/ding2.wav");
+let ding3 = new Audio(src="./sounds/ding3.wav");
+let playing;
 
 mainTable.addEventListener('click', tableClickHandler);
 
 
+
+// ----------------------- functions -----------------------
+
+
 function tableClickHandler(e) {
-  repetitions = document.getElementById("repAmount").value;
-  rhythmMS = ( 60000 / document.getElementById("bpm").value);
+  tickState.repetitions = document.getElementById("repAmount").value;
+  tickState.rhythmMS = ( 60000 / document.getElementById("bpm").value);
   
-  if ( sounding == true ) {
-    clearInterval(timerID);
-    sounding = false;
+  if ( tickState.sounding == true ) {
+    clearInterval(tickState.timerID);
+    console.log('STOPPED!');
+    tickState.sounding = false;
     return;
   }
 
   let clickedRow = e.target.parentNode;
-  newLineRow = clickedRow;
+  tickState.newLineRow = clickedRow;
   if ( !clickedRow.classList.contains('new-line') ) {
-    newLineRow = getNewLineRow(clickedRow);
+    tickState.newLineRow = getNewLineRow(clickedRow);
   }
 
-  rhythmCurrent = getrhythmNumbers(newLineRow);
-  timerID = setInterval(tick, rhythmMS);
-  sounding = true;
+  tickState.rhythmCurrent = getrhythmNumbers(tickState.newLineRow);
+  tickState.timerID = setInterval(tick, tickState.rhythmMS);
+  tickState.sounding = true;
 
 }
 
@@ -41,6 +54,7 @@ function tableClickHandler(e) {
 
 function tick() {
   let phase = whichPhase();
+  tdVisualEffects();
   ding(phase);
 }
 
@@ -48,83 +62,98 @@ function tick() {
 
 function whichPhase() {
 
-  if ( !currentPhase ) { // very first ding
-    currentRow = newLineRow;
-    currentPhase = 'inhale';
-    initialAmountInCP = rhythmCurrent[0];
-    playedInCP = 1;
-    thisRowRepeated = 0;
-  } else if ( currentPhase == 'inhale' ) { // inhale phase check
-    let amountCPLeft = initialAmountInCP - playedInCP; // amountCPLeft = amount repititions in current phase left
-    if ( amountCPLeft < 1 ) {
-      currentPhase = 'hold';
-      playedInCP = 1;
-      initialAmountInCP = rhythmCurrent[1];
-    } else {
-      playedInCP += 1;
-    }
-  } else if ( currentPhase == 'hold' ) { // hold phase check
-    let amountCPLeft = initialAmountInCP - playedInCP;
-    if ( amountCPLeft < 1 ) {
-      currentPhase = 'exhale';
-      playedInCP = 1;
-      initialAmountInCP = rhythmCurrent[2];
-    } else {
-      playedInCP += 1;
-    }
-  } else if ( currentPhase == 'exhale' ) { // exhale phase check
-    let amountCPLeft = initialAmountInCP - playedInCP;
-    if ( amountCPLeft < 1 ) {
-      thisRowRepeated += 1;
+  if ( tickState.currentPhase == undefined ) { // very first ding
+    tickState.currentRow = tickState.newLineRow;
+    tickState.currentPhase = 0;
+    tickState.initialAmountInCP = tickState.rhythmCurrent[0];
+    tickState.playedInCP = 1;
+    tickState.thisRowRepeated = 0;
+  } else if ( tickState.currentPhase == 0 ) { // inhale phase check
+    let amountCPLeft = tickState.initialAmountInCP - tickState.playedInCP; // amountCPLeft = amount repititions in current phase left
 
-      if ( repetitions - thisRowRepeated < 1 ) { // starting a new row
+    if ( amountCPLeft < 1 ) {
+      tickState.currentPhase = 1;
+      tickState.playedInCP = 1;
+      tickState.initialAmountInCP = tickState.rhythmCurrent[1];
+    } else {
+      tickState.playedInCP += 1;
+    }
+  } else if ( tickState.currentPhase == 1 ) { // hold phase check
+    let amountCPLeft = tickState.initialAmountInCP - tickState.playedInCP;
+    if ( amountCPLeft < 1 ) {
+      tickState.currentPhase = 2;
+      tickState.playedInCP = 1;
+      tickState.initialAmountInCP = tickState.rhythmCurrent[2];
+    } else {
+      tickState.playedInCP += 1;
+    }
+  } else if ( tickState.currentPhase == 2 ) { // exhale phase check
+    let amountCPLeft = tickState.initialAmountInCP - tickState.playedInCP;
+    if ( amountCPLeft < 1 ) {
+      tickState.thisRowRepeated += 1;
+
+      if ( tickState.repetitions - tickState.thisRowRepeated < 1 ) { // starting a new row
         console.log('starting a new row');
         getNextRow();
-        currentPhase = 'inhale';
-        initialAmountInCP = rhythmCurrent[0];
-        playedInCP = 1;
+        tickState.currentPhase = 0;
+        tickState.initialAmountInCP = tickState.rhythmCurrent[0];
+        tickState.playedInCP = 1;
 
       } else { // starting this row ones again
         console.log('starting this row ones again');
-        currentPhase = 'inhale';
-        playedInCP = 1;
-        initialAmountInCP = rhythmCurrent[0];
+        tickState.currentPhase = 0;
+        tickState.playedInCP = 1;
+        tickState.initialAmountInCP = tickState.rhythmCurrent[0];
       }
     } else {
-      playedInCP += 1;
+      tickState.playedInCP += 1;
     }
   } 
 
 
-  return currentPhase;
+  return tickState.currentPhase;
 }
+
 
 
 function getNextRow() {
 
-  currentRow = currentRow.nextElementSibling;
-  rhythmCurrent = getrhythmNumbers(currentRow);
-  thisRowRepeated = 0;
+  tickState.currentRow = tickState.currentRow.nextElementSibling;
+  tickState.rhythmCurrent = getrhythmNumbers(tickState.currentRow);
+  tickState.thisRowRepeated = 0;
 
 }
 
 
+// playing sounds
 function ding(phase) {
 
   switch (phase) {
-    case 'inhale':
-      let ding1 = new Audio(src="./sounds/ding1.mp3");
-      ding1.play();
+    case 0: // 'inhale'
+      if ( playing ) {
+        playing.pause();
+        playing.currentTime = 0;
+      }
+      playing = ding1;
+      playing.play();
       console.log('inhale ding');
       break;
-    case 'hold':
-      let ding2 = new Audio(src="./sounds/ding2.wav");
-      ding2.play();
+    case 1: // 'hold'
+      if ( playing ) {
+        playing.pause();
+        playing.currentTime = 0;
+      }
+      playing = ding2;
+      playing.play();
       console.log('hold ding');
       break;
-    case 'exhale':
-      let ding3 = new Audio(src="./sounds/ding3.wav");
-      ding3.play();
+    case 2: // 'exhale'
+      if ( playing ) {
+        playing.pause();
+        playing.currentTime = 0;
+      }
+      playing = ding3;
+      playing.play();
       console.log('exhale ding');
       break;
   }
@@ -150,15 +179,8 @@ function getrhythmNumbers(row) {
 }
 
 
+function tdVisualEffects() {
 
-function soundRow(rhythm) {
-
-  let ding1 = new Audio(src="./sounds/ding1.mp3");
-  let ding2 = new Audio(src="./sounds/ding2.wav");
-  let ding3 = new Audio(src="./sounds/ding3.wav");
-    
-  ding3.play();
-
+  tickState.currentRow.children[tickState.currentPhase].classList.add("playing-row");
 }
-
 
