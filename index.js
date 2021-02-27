@@ -34,7 +34,9 @@ function tableClickHandler(e) {
   if ( tickState.sounding == true ) {
     clearInterval(tickState.timerID);
     console.log('STOPPED!');
-    tickState.sounding = false;
+    tickState.currentTD.classList.remove("playing-td");
+    tickState.currentTD.removeChild(tickState.thigle);
+    tickState = {};
     return;
   }
 
@@ -181,6 +183,21 @@ function getrhythmNumbers(row) {
 
 function tdVisualEffects() {
 
-  tickState.currentRow.children[tickState.currentPhase].classList.add("playing-row");
+  tickState.currentTD = tickState.currentRow.children[tickState.currentPhase]
+  tickState.currentTD.classList.add("playing-td");
+
+  tickState.thigle = document.createElement("div");
+  tickState.thigle.classList.add("thigle");
+  tickState.currentTD.append(tickState.thigle);
+
+  setTimeout(() => {
+    tickState.thigle.style.opacity = "0.1";
+  }, 50);
+
+
+  setTimeout(() => {
+    tickState.currentTD.classList.remove("playing-td");
+    tickState.currentTD.removeChild(tickState.thigle);
+  }, (tickState.rhythmMS - 10));
 }
 
