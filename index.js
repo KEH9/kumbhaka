@@ -1,5 +1,8 @@
 // ----------------------- initial -----------------------
+let bpm = document.getElementById("bpm");
+let repAmount = document.getElementById("repAmount");
 let mainTable = document.getElementById("mainTable");
+let questionMark = document.getElementById("questionMark");
 
 let tickState = {};
 // tickState contains:
@@ -13,6 +16,8 @@ let tickState = {};
 // initialAmountInCP - initialAmountInCurrentPhase
 // playedInCP - playedInCurrentPhase
 // thisRowRepeated -  times
+// currentTD
+// thigle
 tickState.sounding = false;
 
 let ding1 = new Audio(src="./sounds/ding1.mp3");
@@ -20,11 +25,39 @@ let ding2 = new Audio(src="./sounds/ding2.wav");
 let ding3 = new Audio(src="./sounds/ding3.wav");
 let playing;
 
+bpm.addEventListener('blur', bpmBlurHandler);
+repAmount.addEventListener('blur', repAmountBlurHandler);
 mainTable.addEventListener('click', tableClickHandler);
-
+questionMark.addEventListener('click', showHelp);
 
 
 // ----------------------- functions -----------------------
+
+// check BPM value on blur and set acceptable value
+function bpmBlurHandler(e) {
+  let bpmVal = bpm.value;
+  if ( bpmVal > 150 ) {
+    bpm.value = 150;
+    } else if ( bpmVal < 10 ) {
+      bpm.value = 10;
+    } else if ( isNaN(bpmVal) ) {
+      bpm.value = 60;
+    }
+}
+
+
+// check amount of repitition value on blur and set acceptable value
+function repAmountBlurHandler(e) {
+  let repAmountVal = repAmount.value;
+  if ( repAmountVal > 999 ) {
+    repAmount.value = 999;
+    } else if ( repAmountVal < 1 ) {
+      repAmount.value = 1;
+    } else if ( isNaN(repAmountVal) ) {
+      repAmount.value = 10;
+    }
+
+}
 
 
 function tableClickHandler(e) {
@@ -32,19 +65,15 @@ function tableClickHandler(e) {
   tickState.rhythmMS = ( 60000 / document.getElementById("bpm").value);
   
   if ( tickState.sounding == true ) {
-    clearInterval(tickState.timerID);
-    console.log('STOPPED!');
-    tickState.currentTD.classList.remove("playing-td");
-    tickState.currentTD.removeChild(tickState.thigle);
-    tickState = {};
+    stop();
     return;
   }
 
+  if ( e.target.tagName != 'TD' ) {
+    return;
+  }
   let clickedRow = e.target.parentNode;
   tickState.newLineRow = clickedRow;
-  if ( !clickedRow.classList.contains('new-line') ) {
-    tickState.newLineRow = getNewLineRow(clickedRow);
-  }
 
   tickState.rhythmCurrent = getrhythmNumbers(tickState.newLineRow);
   tickState.timerID = setInterval(tick, tickState.rhythmMS);
@@ -60,6 +89,19 @@ function tick() {
   ding(phase);
 }
 
+
+function stop() {
+  clearInterval(tickState.timerID);
+  console.log('STOPPED!');
+  if ( tickState.currentTD ) {
+    tickState.currentTD.classList.remove("playing-td");
+    if ( tickState.thigle ) tickState.currentTD.removeChild(tickState.thigle);
+  }
+  tickState = {};
+  tickState.sounding = false;
+
+
+}
 
 
 function whichPhase() {
@@ -120,9 +162,21 @@ function whichPhase() {
 
 function getNextRow() {
 
-  tickState.currentRow = tickState.currentRow.nextElementSibling;
-  tickState.rhythmCurrent = getrhythmNumbers(tickState.currentRow);
-  tickState.thisRowRepeated = 0;
+  if ( tickState.currentRow.nextElementSibling ) {
+    tickState.currentRow = tickState.currentRow.nextElementSibling;
+// scroll down the page if the next row is outside of the screen
+    let box = tickState.currentRow.getBoundingClientRect();
+    let toBottom = window.innerHeight - box.bottom;
+    console.log(toBottom);
+    if ( toBottom < 30 ) {
+      window.scroll(0, (window.scrollY + 29));
+    }
+
+    tickState.rhythmCurrent = getrhythmNumbers(tickState.currentRow);
+    tickState.thisRowRepeated = 0;
+  } else {
+    stop();
+  }
 
 }
 
@@ -164,20 +218,8 @@ function ding(phase) {
 
 
 
-function getNewLineRow(row) {
-
-  while ( !row.classList.contains('new-line') ) {
-    row = row.previousElementSibling;
-  }
-
-  return row;
-
-}
-
-
-
 function getrhythmNumbers(row) {
-  return [+row.children[0].textContent, +row.children[1].textContent, +row.children[2].textContent];
+  if ( row.children[0] ) return [+row.children[0].textContent, +row.children[1].textContent, +row.children[2].textContent];
 }
 
 
@@ -191,13 +233,45 @@ function tdVisualEffects() {
   tickState.currentTD.append(tickState.thigle);
 
   setTimeout(() => {
-    tickState.thigle.style.opacity = "0.1";
+    if ( tickState.thigle ) tickState.thigle.style.opacity = "0.2";
   }, 50);
 
 
   setTimeout(() => {
-    tickState.currentTD.classList.remove("playing-td");
-    tickState.currentTD.removeChild(tickState.thigle);
-  }, (tickState.rhythmMS - 10));
+    if ( tickState.thigle ) tickState.thigle.parentNode.removeChild(tickState.thigle);
+    if ( tickState.currentTD ) tickState.currentTD.classList.remove("playing-td");
+  }, (tickState.rhythmMS - 25));
+}
+
+
+function showHelp() {
+
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  
+  // When the user clicks on the button, open the modal
+  modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+  span.addEventListener('click', function() {
+    modal.style.display = "none";
+  })
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener('click', function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  })
+
+  window.addEventListener('keydown', function(event) {
+    
+    if ( event.key == 'Escape' ) {
+      modal.style.display = "none";
+    }
+  })
+
 }
 

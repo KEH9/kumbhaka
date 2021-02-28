@@ -5,6 +5,13 @@ body {
   font-variant: normal;
   font-weight: 700;
   line-height: 26.4px;
+  background-image: url(./img/imageB.jpg);
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 input {
@@ -21,17 +28,29 @@ input {
 #container {
   width: 800px;
   margin: 0 auto;
-  border: 2px dashed green;
+}
+
+/* question mark for help */
+#questionMark {
+  cursor: pointer;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  margin-top: -9px;
+  margin-left: 12px;
 }
 
 #mainTable {
+  cursor: pointer;
   margin: 0 auto;
   margin-top: 20px;
 }
 
 #mainTable td {
   width: 100px;
+  height: 26px;
   text-align: center;
+  background-color: white;
 }
 
 #bpm, #repAmount {
@@ -45,13 +64,19 @@ input {
 #mainTable, #mainTable td {
   border-collapse: collapse;
   border: 1px solid black;
+  background-clip: padding-box;
+}
+
+#footer {
+  margin-top: 23px;
+  font-size: 14px;
 }
 
 .centered {
   text-align: center;
 }
 
-.new-line {
+#mainTable .new-line td {
   background-color: lightgrey;
 }
 
@@ -75,7 +100,6 @@ input {
   bottom: 0;
   left: 0;
   right: 0;
-  opacity: .4;
   width: 100%;
   height: 100%;
 
@@ -84,7 +108,46 @@ input {
 
 }
 
+/*
+----------------- Modal window for Help -----------------
+*/
 
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 

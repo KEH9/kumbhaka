@@ -9,9 +9,26 @@
   <body>
     <div id="container">
 
-      <div class="centered">
-        <h1>The Small Kumbhaka Table.</h1>
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Set bit per minute (BPM) value and desirable amount of repetitions of the each row.</p>
+          <p>Click the row in the table.</p>
+          <p>To stop metronome click the table ones again in any place.</p>
+          <p>After that you still can click any row to start it.</p>
+        </div>
+
       </div>
+      
+      <div class="centered">
+        <h1>The Small Kumbhaka Table. <img id="questionMark" src="./img/37171.png"></h1>
+        
+      </div>
+
+
 
       <div class="centered">
         BPM &nbsp; &nbsp; 
@@ -20,370 +37,232 @@
   
       <div class="centered">
         The number of repititions for each row   &nbsp; &nbsp; 
-        <input type="number" id="repAmount" value="2" min="1" max="999" step="1" />
+        <input type="number" id="repAmount" value="10" min="1" max="999" step="1" />
       </div>
   
       <table id="mainTable">
         <tbody>
           <tr class="new-line">
-            <td>4</td>
-            <td>4</td>
-            <td>4</td>
+            <td>4</td><td>4</td><td>4</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>6</td>
-            <td>4</td>
+            <td>4</td><td>6</td><td>4</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>8</td>
-            <td>4</td>
+            <td>4</td><td>8</td><td>4</td>
           </tr>
           <tr class="new-line">
-            <td>4</td>
-            <td>6</td>
-            <td>6</td>
+            <td>4</td><td>6</td><td>6</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>8</td>
-            <td>6</td>
+            <td>4</td><td>8</td><td>6</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>10</td>
-            <td>6</td>
+            <td>4</td><td>10</td><td>6</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>12</td>
-            <td>6</td>
+            <td>4</td><td>12</td><td>6</td>
           </tr>
           <tr class="new-line">
-            <td>4</td>
-            <td>8</td>
-            <td>8</td>
+            <td>4</td><td>8</td><td>8</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>10</td>
-            <td>8</td>
+            <td>4</td><td>10</td><td>8</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>12</td>
-            <td>8</td>
+            <td>4</td><td>12</td><td>8</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>14</td>
-            <td>8</td>
+            <td>4</td><td>14</td><td>8</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td>16</td>
-            <td>8</td>
+            <td>4</td><td>16</td><td>8</td>
           </tr>
           <tr class="new-line">
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
+            <td>6</td><td>6</td><td>6</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>8</td>
-            <td>6</td>
+            <td>6</td><td>8</td><td>6</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>10</td>
-            <td>6</td>
+            <td>6</td><td>10</td><td>6</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>12</td>
-            <td>6</td>
+            <td>6</td><td>12</td><td>6</td>
           </tr>
           <tr class="new-line">
-            <td>6</td>
-            <td>8</td>
-            <td>8</td>
+            <td>6</td><td>8</td><td>8</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>10</td>
-            <td>8</td>
+            <td>6</td><td>10</td><td>8</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>12</td>
-            <td>8</td>
+            <td>6</td><td>12</td><td>8</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>14</td>
-            <td>8</td>
+            <td>6</td><td>14</td><td>8</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>16</td>
-            <td>8</td>
+            <td>6</td><td>16</td><td>8</td>
           </tr>
           <tr class="new-line">
-            <td>6</td>
-            <td>10</td>
-            <td>10</td>
+            <td>6</td><td>10</td><td>10</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>12</td>
-            <td>10</td>
+            <td>6</td><td>12</td><td>10</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>14</td>
-            <td>10</td>
+            <td>6</td><td>14</td><td>10</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>16</td>
-            <td>10</td>
+            <td>6</td><td>16</td><td>10</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>18</td>
-            <td>10</td>
+            <td>6</td><td>18</td><td>10</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>20</td>
-            <td>10</td>
+            <td>6</td><td>20</td><td>10</td>
           </tr>
           <tr class="new-line">
-            <td>6</td>
-            <td>12</td>
-            <td>12</td>
+            <td>6</td><td>12</td><td>12</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>14</td>
-            <td>12</td>
+            <td>6</td><td>14</td><td>12</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>16</td>
-            <td>12</td>
+            <td>6</td><td>16</td><td>12</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>18</td>
-            <td>12</td>
+            <td>6</td><td>18</td><td>12</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>20</td>
-            <td>12</td>
+            <td>6</td><td>20</td><td>12</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>22</td>
-            <td>12</td>
+            <td>6</td><td>22</td><td>12</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>24</td>
-            <td>12</td>
+            <td>6</td><td>24</td><td>12</td>
           </tr>
           <tr class="new-line">
-            <td>8</td>
-            <td>8</td>
-            <td>8</td>
+            <td>8</td><td>8</td><td>8</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>10</td>
-            <td>8</td>
+            <td>8</td><td>10</td><td>8</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>12</td>
-            <td>8</td>
+            <td>8</td><td>12</td><td>8</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>14</td>
-            <td>8</td>
+            <td>8</td><td>14</td><td>8</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>16</td>
-            <td>8</td>
+            <td>8</td><td>16</td><td>8</td>
           </tr>
           <tr class="new-line">
-            <td>8</td>
-            <td>10</td>
-            <td>10</td>
+            <td>8</td><td>10</td><td>10</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>12</td>
-            <td>10</td>
+            <td>8</td><td>12</td><td>10</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>14</td>
-            <td>10</td>
+            <td>8</td><td>14</td><td>10</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>16</td>
-            <td>10</td>
+            <td>8</td><td>16</td><td>10</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>18</td>
-            <td>10</td>
+            <td>8</td><td>18</td><td>10</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>20</td>
-            <td>10</td>
+            <td>8</td><td>20</td><td>10</td>
           </tr>
           <tr class="new-line">
-            <td>8</td>
-            <td>12</td>
-            <td>12</td>
+            <td>8</td><td>12</td><td>12</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>14</td>
-            <td>12</td>
+            <td>8</td><td>14</td><td>12</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>16</td>
-            <td>12</td>
+            <td>8</td><td>16</td><td>12</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>18</td>
-            <td>12</td>
+            <td>8</td><td>18</td><td>12</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>20</td>
-            <td>12</td>
+            <td>8</td><td>20</td><td>12</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>22</td>
-            <td>12</td>
+            <td>8</td><td>22</td><td>12</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>24</td>
-            <td>12</td>
+            <td>8</td><td>24</td><td>12</td>
           </tr>
           <tr class="new-line">
-            <td>8</td>
-            <td>14</td>
-            <td>14</td>
+            <td>8</td><td>14</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>16</td>
-            <td>14</td>
+            <td>8</td><td>16</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>18</td>
-            <td>14</td>
+            <td>8</td><td>18</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>20</td>
-            <td>14</td>
+            <td>8</td><td>20</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>22</td>
-            <td>14</td>
+            <td>8</td><td>22</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>24</td>
-            <td>14</td>
+            <td>8</td><td>24</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>26</td>
-            <td>14</td>
+            <td>8</td><td>26</td><td>14</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>28</td>
-            <td>14</td>
+            <td>8</td><td>28</td><td>14</td>
           </tr>
           <tr class="new-line">
-            <td>8</td>
-            <td>16</td>
-            <td>16</td>
+            <td>8</td><td>16</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>18</td>
-            <td>16</td>
+            <td>8</td><td>18</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>20</td>
-            <td>16</td>
+            <td>8</td><td>20</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>22</td>
-            <td>16</td>
+            <td>8</td><td>22</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>24</td>
-            <td>16</td>
+            <td>8</td><td>24</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>26</td>
-            <td>16</td>
+            <td>8</td><td>26</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>28</td>
-            <td>16</td>
+            <td>8</td><td>28</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>30</td>
-            <td>16</td>
+            <td>8</td><td>30</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>32</td>
-            <td>16</td>
+            <td>8</td><td>32</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>34</td>
-            <td>16</td>
+            <td>8</td><td>34</td><td>16</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>36</td>
-            <td>16</td>
+            <td>8</td><td>36</td><td>16</td>
           </tr>
         </tbody>
       </table>
 
-
+      <div id="footer" class="centered">
+        If you have any questions or ideas how to improve this tool 
+        please do not hesitate to write me 
+        <a href="mailto:innokkuz@mail.com">innokkuz@mail.com</a>
+      </div>
 
     </div>
     <script src='index.js'></script>
