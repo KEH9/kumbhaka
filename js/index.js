@@ -94,6 +94,7 @@ function tableClickHandler(e) {
 
 function tick() {
   let phase = whichPhase();
+  if ( tickState.currentPhase == undefined ) return // stop if getNextRow() detected end of table
   tdVisualEffects();
   ding(phase);
 }
@@ -104,7 +105,7 @@ function stop() {
   console.log('STOPPED!');
   if ( tickState.currentTD ) {
     tickState.currentTD.classList.remove("playing-td");
-    if ( tickState.thigle ) tickState.currentTD.removeChild(tickState.thigle);
+    removeThigles();
   }
   tickState = {};
   tickState.sounding = false;
@@ -144,8 +145,9 @@ function whichPhase() {
       tickState.thisRowRepeated += 1;
 
       if ( tickState.repetitions - tickState.thisRowRepeated < 1 ) { // starting a new row
-        console.log('starting a new row');
         getNextRow();
+        if ( tickState.currentPhase == undefined ) return // stop if getNextRow() detected end of table
+        console.log('starting a new row');
         tickState.currentPhase = 0;
         tickState.initialAmountInCP = tickState.rhythmCurrent[0];
         tickState.playedInCP = 1;
@@ -245,9 +247,17 @@ function tdVisualEffects() {
 
 
   setTimeout(() => {
-    if ( tickState.thigle ) tickState.thigle.parentNode.removeChild(tickState.thigle);
+    removeThigles();
     if ( tickState.currentTD ) tickState.currentTD.classList.remove("playing-td");
-  }, (tickState.rhythmMS - 25));
+  }, (tickState.rhythmMS - 35));
+}
+
+
+function removeThigles() {
+  let thigles = mainTable.querySelectorAll('.thigle');
+  for (let thigle of thigles) {
+    thigle.parentNode.removeChild(thigle);
+  }
 }
 
 

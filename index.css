@@ -1,10 +1,8 @@
 body {
   font-family: "EB Garamond";
-  font-size: 24px;
   font-style: normal;
   font-variant: normal;
   font-weight: 700;
-  line-height: 26.4px;
   background-image: url(./img/imageB.jpg);
 
   -moz-user-select: -moz-none;
@@ -16,17 +14,93 @@ body {
 
 input {
   font-family: "EB Garamond";
-  font-size: 24px;
   font-style: normal;
   font-variant: normal;
   font-weight: 700;
-  line-height: 26.4px;
   border: 2px solid gray;
   border-radius: 5px;
 }
 
+/* 
+----------------- responsive parameters (begin) ----------------- 
+*/
+
+/* mobile */ 
+body {
+  font-size: 5vw;
+}
+
+input {
+  font-size: 5vw;
+}
+
+
+h1 {
+  line-height: 9vw;
+}
+
 #container {
-  width: 800px;
+  width: 80%;
+  border: 2px dashed blue;
+}
+
+#bpm, #repAmount {
+  width: 11vw;
+}
+
+#mainTable td {
+  width: 300px;
+  height: 52px;
+}
+
+#mainTable  {
+  width: 100%;
+}
+
+
+@media (min-width: 992px) { /* desktop */
+  body {
+    font-size: 24px;
+    line-height: 26.4px;
+  }
+
+  input {
+    font-size: 24px;
+    line-height: 26.4px;
+  }
+
+  h1 {
+    line-height: 26.4px;
+  }
+    
+  #container {
+    width: 800px;
+    border: none;
+  }
+
+  #bpm, #repAmount {
+    width: 60px;
+  }
+  
+  #mainTable td {
+    width: 100px;
+    height: 26px;
+  }
+
+  #mainTable  {
+    width: 310px;
+  }
+  
+  
+}
+
+/*
+----------------- responsive parameters (end) -----------------
+*/
+
+
+
+#container {
   margin: 0 auto;
 }
 
@@ -47,14 +121,8 @@ input {
 }
 
 #mainTable td {
-  width: 100px;
-  height: 26px;
   text-align: center;
   background-color: white;
-}
-
-#bpm, #repAmount {
-  width: 60px;
 }
 
 #repAmount {
@@ -109,7 +177,7 @@ input {
 }
 
 /*
------------------ Modal window for Help -----------------
+----------------- Modal window for Help (begin) -----------------
 */
 
 /* The Modal (background) */
@@ -149,5 +217,11 @@ input {
   text-decoration: none;
   cursor: pointer;
 }
+
+/*
+----------------- Modal window for Help (end) -----------------
+*/
+
+
 
 
