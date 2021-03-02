@@ -41,7 +41,6 @@ h1 {
 
 #container {
   width: 80%;
-  border: 2px dashed blue;
 }
 
 #bpm, #repAmount {

@@ -178,7 +178,11 @@ function getNextRow() {
     let toBottom = window.innerHeight - box.bottom;
     console.log(toBottom);
     if ( toBottom < 30 ) {
-      window.scroll(0, (window.scrollY + 29));
+      if ( toBottom < 0 ) {
+        window.scroll(0, (window.scrollY + (40 - toBottom)));
+      } else {
+        window.scroll(0, (window.scrollY + 40));
+      }
     }
 
     tickState.rhythmCurrent = getrhythmNumbers(tickState.currentRow);
