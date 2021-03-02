@@ -4,6 +4,13 @@ let repAmount = document.getElementById("repAmount");
 let mainTable = document.getElementById("mainTable");
 let questionMark = document.getElementById("questionMark");
 
+if ( localStorage.getItem("bpm") > 0 ) {
+  bpm.value = localStorage.getItem("bpm");
+}
+if ( localStorage.getItem("repAmount") > 0 ) {
+  repAmount.value = localStorage.getItem("repAmount");
+}
+
 let tickState = {};
 // tickState contains:
 // timerID
@@ -42,7 +49,7 @@ document.addEventListener('click', function enableNoSleep() {
 
 // ----------------------- functions -----------------------
 
-// check BPM value on blur and set acceptable value
+// check BPM value on blur set acceptable value and save to local storage
 function bpmBlurHandler(e) {
   let bpmVal = bpm.value;
   if ( bpmVal > 150 ) {
@@ -51,11 +58,12 @@ function bpmBlurHandler(e) {
       bpm.value = 10;
     } else if ( isNaN(bpmVal) ) {
       bpm.value = 60;
-    }
+  }
+  localStorage.setItem("bpm", bpm.value);
 }
 
 
-// check amount of repitition value on blur and set acceptable value
+// check amount of repitition value on blur set acceptable value and save to local storage
 function repAmountBlurHandler(e) {
   let repAmountVal = repAmount.value;
   if ( repAmountVal > 999 ) {
@@ -64,8 +72,8 @@ function repAmountBlurHandler(e) {
       repAmount.value = 1;
     } else if ( isNaN(repAmountVal) ) {
       repAmount.value = 10;
-    }
-
+  }
+  localStorage.setItem("repAmount", repAmount.value);
 }
 
 
