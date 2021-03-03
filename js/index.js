@@ -12,6 +12,7 @@ if ( localStorage.getItem("repAmount") > 0 ) {
 }
 
 let tickState = {};
+tickState.sounding = false;
 // tickState contains:
 // timerID
 // newLineRow
@@ -25,7 +26,6 @@ let tickState = {};
 // thisRowRepeated -  times
 // currentTD
 // thigle
-tickState.sounding = false;
 
 let ding1 = new Audio(src="./sounds/ding1.mp3");
 let ding2 = new Audio(src="./sounds/ding2.wav");
@@ -99,7 +99,7 @@ function tableClickHandler(e) {
 }
 
 
-
+// each tick running
 function tick() {
   let phase = whichPhase();
   if ( tickState.currentPhase == undefined ) return // stop if getNextRow() detected end of table
@@ -107,7 +107,7 @@ function tick() {
   ding(phase);
 }
 
-
+// stop ticks
 function stop() {
   clearInterval(tickState.timerID);
   console.log('STOPPED!');
@@ -119,7 +119,7 @@ function stop() {
   tickState.sounding = false;
 }
 
-
+// retutning which phase now ( 0 = inhale, 1 = hold, 2 = exhale )
 function whichPhase() {
 
   if ( tickState.currentPhase == undefined ) { // very first ding
@@ -176,7 +176,7 @@ function whichPhase() {
 }
 
 
-
+// setting tickState.currentRow and scrolling screen
 function getNextRow() {
 
   if ( tickState.currentRow.nextElementSibling ) {
@@ -238,33 +238,33 @@ function ding(phase) {
 }
 
 
-
+// returning numbers of each phase as array [inhale, hold, exhale]
 function getrhythmNumbers(row) {
   if ( row.children[0] ) return [+row.children[0].textContent, +row.children[1].textContent, +row.children[2].textContent];
 }
 
 
+// adding flashing thigle into table
 function tdVisualEffects() {
-
+// creating thigle
   tickState.currentTD = tickState.currentRow.children[tickState.currentPhase]
   tickState.currentTD.classList.add("playing-td");
-
   tickState.thigle = document.createElement("div");
   tickState.thigle.classList.add("thigle");
   tickState.currentTD.append(tickState.thigle);
 
+// setting opacity to make animation of the flashing
   setTimeout(() => {
     if ( tickState.thigle ) tickState.thigle.style.opacity = "0.2";
   }, 50);
-
-
+// removing
   setTimeout(() => {
     removeThigles();
     if ( tickState.currentTD ) tickState.currentTD.classList.remove("playing-td");
   }, (tickState.rhythmMS - 35));
 }
 
-
+// search and remove all thigles
 function removeThigles() {
   let thigles = mainTable.querySelectorAll('.thigle');
   for (let thigle of thigles) {
@@ -273,6 +273,7 @@ function removeThigles() {
 }
 
 
+// show / hide help modal 
 function showHelp() {
 
   // Get the modal
