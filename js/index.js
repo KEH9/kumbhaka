@@ -78,11 +78,11 @@ function tableClickHandler(e) {
 
   // activate sound for stupid iphones (otherwise ios not playing)
   ding1 = new Audio();
-  ding1.play();
+  ding1.play().catch((e) => {});
   ding2 = new Audio();
-  ding2.play();
+  ding2.play().catch((e) => {});
   ding3 = new Audio();
-  ding3.play();
+  ding3.play().catch((e) => {});
   ding1.src="./sounds/ding1.mp3";
   ding2.src="./sounds/ding2.wav";
   ding3.src="./sounds/ding3.wav";
