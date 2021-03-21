@@ -102,7 +102,7 @@ function tableClickHandler(e) {
   tickState.newLineRow = clickedRow;
 
   tickState.rhythmCurrent = getrhythmNumbers(tickState.newLineRow);
-  tickState.timerID = setInterval(tick, tickState.rhythmMS);
+  tickState.timerID = setInterval(tick.bind(this), tickState.rhythmMS);
   tickState.sounding = true;
 
 }
