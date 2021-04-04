@@ -36,13 +36,17 @@ questionMark.addEventListener('click', showHelp);
 
 // ----------------------- noSleep -----------------------
 
-let noSleep = new NoSleep();
-// Enable wake lock.
-// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
-document.addEventListener('click', function enableNoSleep() {
-  document.removeEventListener('click', enableNoSleep, false);
-  noSleep.enable();
-}, false);
+let isIOS = (/iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel')) && !window.MSStream;
+
+if ( !isIOS ) {
+  let noSleep = new NoSleep();
+  // Enable wake lock.
+  // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+  document.addEventListener('click', function enableNoSleep() {
+    document.removeEventListener('click', enableNoSleep, false);
+    noSleep.enable();
+  }, false);
+}
 
 // ----------------------- functions -----------------------
 
